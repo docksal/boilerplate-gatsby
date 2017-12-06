@@ -10,10 +10,10 @@ rm -rf "$PROJECT_ROOT/docroot" 2>/dev/null
 fin exec gatsby new docroot
 
 # Set environment to develop by default to make Gatsby launch develop instance
-#echo 'DOCKSAL_ENVIRONMENT="develop"' > "$PROJECT_ROOT/.docksal/docksal.env"
+echo 'DOCKSAL_ENVIRONMENT="develop"' > "$PROJECT_ROOT/.docksal/docksal.env"
 
 # Restart project with new image for the container
-#fin restart
+fin restart
 
 echo "Done!"
 echo "  URL: http://$VIRTUAL_HOST"
