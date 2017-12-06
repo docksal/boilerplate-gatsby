@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
 
-fin project reset -f
+rm "$PROJECT_ROOT/.docksal/docksal.env" 2>/dev/null
+fin reset -f
 
 # Create new site
 cd "$PROJECT_ROOT"
+fin exec npm install --global gatsby-cli
 rm -rf "$PROJECT_ROOT/docroot" 2>/dev/null
-gatsby new docroot
+fin exec gatsby new docroot
 
 # Set environment to develop by default to make Gatsby launch develop instance
-echo 'DOCKSAL_ENVIRONMENT="develop"' > "$PROJECT_ROOT/.docksal/docksal.env"
+#echo 'DOCKSAL_ENVIRONMENT="develop"' > "$PROJECT_ROOT/.docksal/docksal.env"
 
 # Restart project with new image for the container
-fin project restart
+#fin restart
+
+echo "Done!"
+echo "  URL: http://$VIRTUAL_HOST"
