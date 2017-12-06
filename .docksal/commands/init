@@ -1,19 +1,43 @@
 #!/usr/bin/env bash
 
-rm "$PROJECT_ROOT/.docksal/docksal.env" 2>/dev/null
-fin reset -f
+green='\033[0;32m'
+yellow='\033[1;33m'
+NC='\033[0m'
 
+#-------- Runtime ----------
+
+echo -e "${yellow}1. Preparing containers${NC}"
+rm "$PROJECT_ROOT/.docksal/docksal.env" 2>/dev/null
+# Docker network glitches sometimes
+# Do it twice
+fin rm -f || fin rm -f 
+# Force configuration re-read
+COMPOSE_FILE="" ENV_FILE="" DOCKSAL_ENVIRONMENT="" \
+  fin up
+
+echo -e "${yellow}2. Installing the site${NC}"
 # Create new site
 cd "$PROJECT_ROOT"
 fin exec npm install --global gatsby-cli
 rm -rf "$PROJECT_ROOT/docroot" 2>/dev/null
-fin exec gatsby new docroot
+# When CPU is busy and docroot existed then docker can throw an error here. 
+# Give it 1 sec to process the deletion
+sleep 1
+fin exec gatsby new docroot || exit 1
 
 # Set environment to develop by default to make Gatsby launch develop instance
 echo 'DOCKSAL_ENVIRONMENT="develop"' > "$PROJECT_ROOT/.docksal/docksal.env"
 
+echo -e "${yellow}3. Running Gatsby in development mode${NC}"
+sleep 1
+fin rm -f || fin rm -f 
+sleep 3 # docker network glitches sometimes
 # Restart project with new image for the container
-fin restart
+# Force configuration re-read
+COMPOSE_FILE="" ENV_FILE="" DOCKSAL_ENVIRONMENT="develop" \
+  fin up
 
-echo "Done!"
-echo "  URL: http://$VIRTUAL_HOST"
+echo "------------------------------------"
+echo -e "${green}Installation complete.${NC}"
+echo -e "  URL: ${yellow}http://$VIRTUAL_HOST${NC}"
+echo
