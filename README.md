@@ -4,6 +4,7 @@ Gatsby (https://www.gatsbyjs.org/) example project for Docksal
 
 ## Instructions
 
+`fin init` will install the Gatsby default builder.
 Once the site is installed Docksal will start Gatsby in the development mode. 
 Allowing you to jump to playing with the installation. 
 
