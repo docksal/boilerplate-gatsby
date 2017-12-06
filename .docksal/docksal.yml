@@ -1,0 +1,17 @@
+# Node.js stack
+
+version: "2.1"
+
+services:
+  # Web & CLI
+  cli:
+    extends:
+      file: ${HOME}/.docksal/stacks/services.yml
+      service: cli
+    # image: ${COMPOSE_PROJECT_NAME_SAFE}_gatsby_develop
+    # build: ${PROJECT_ROOT}/.docksal/services/cli/develop
+    labels:
+      - io.docksal.virtual-host=${VIRTUAL_HOST},*.${VIRTUAL_HOST}
+      - io.docksal.project-root=${PROJECT_ROOT}
+    ports:
+      - "80"

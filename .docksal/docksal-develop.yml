@@ -1,0 +1,8 @@
+# Override docksal.yml to make Gatsby run a develop server
+version: "2.1"
+
+services:
+  # Web & CLI
+  cli:
+    image: ${COMPOSE_PROJECT_NAME_SAFE}_gatsby_develop
+    build: ${PROJECT_ROOT}/.docksal/services/cli/develop

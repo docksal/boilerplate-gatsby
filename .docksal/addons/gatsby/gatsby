@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+#: exec_target=web
+
+## Gatsby insallation and control (see fin help gatsby)
+## 	install		Install a new site
+## 	develop		Launch development instance of the site
+## 	build		Build and launch static instance of the site
+
+# ------------------ Runtime ----------------------
+
+cd "$PROJECT_ROOT"
+
+case "$1" in
+	install)
+		# Create new site
+		rm -rf "$PROJECT_ROOT/docroot"
+		gatsby new docroot
+		# 
+		echo "Run 'fin gatsby develop' to run development version of your site."
+		;;
+	develop)
+		echo "Once the build is complete you site will be available at http://$VIRTUAL_HOST"
+		sleep 1
+		echo "-----------------------------------------------------------------------------"
+		sleep 1
+		cd "$PROJECT_ROOT/docroot"
+		# Absolute path to gatsby
+		_gatsby=$(which gatsby 2>/dev/null)
+		# Lines to initialize NPM as root
+		_load_nvm="export NVM_DIR=\"/home/docker/.nvm\"; . \"$NVM_DIR/nvm.sh\""
+		# Execute gatsby develop as root to be able to bind to port 80
+		sudo su -c "$_load_nvm; \"${_gatsby}\" develop --host=0.0.0.0 --port=80"
+		;;
+	build)
+		cd "$PROJECT_ROOT/docroot"
+		# Absolute path to gatsby
+		_gatsby=$(which gatsby 2>/dev/null)
+		# Lines to initialize NPM as root
+		_load_nvm="export NVM_DIR=\"/home/docker/.nvm\"; . \"$NVM_DIR/nvm.sh\""
+		# Execute gatsby develop as root to be able to bind to port 80
+		sudo su -c "$_load_nvm; \"${_gatsby}\" build; \"${_gatsby}\" serve --port=80"
+		;;
+	*)
+		echo "See 'fin help gatsby'"
+		exit 1
+esac
