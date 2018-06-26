@@ -1,17 +1,21 @@
 #!/bin/bash
 
-## Install nodejs dependencies
+## Creates new Gatsby site in $DOCROOT
 ##
-## Removes node_modules and runs `npm install` for a clean dependency installation
+## Removes existing files in $DOCROOT
+
+yellow='\033[1;33m'
+NC='\033[0m'
 
 cd "$PROJECT_ROOT"
 
 # Make sure project stack is running
 fin project start
 
-echo -e "${yellow}Creating new site${NC}"
+echo -e "${yellow}Creating new site...${NC}"
 
 # Cleanup
+echo "Running cleanup"
 rm -rf "$PROJECT_ROOT/$DOCROOT" 2>/dev/null
 
 # When CPU is busy and docroot existed then docker can throw an error here, so give it a second to process the deletion

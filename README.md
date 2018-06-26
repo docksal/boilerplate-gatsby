@@ -4,16 +4,13 @@ Gatsby (https://www.gatsbyjs.org/) example project for Docksal
 
 ## Instructions
 
-`fin init` will install the Gatsby default builder.
-Once the site is installed Docksal will start Gatsby in the development mode. 
-Allowing you to jump to playing with the installation. 
+`fin init` will install Gatsby's default starter.
+Once the site is installed, Docksal will start Gatsby in the development mode, 
+allowing you to jump to playing with the installation. 
 
-Simply edit files under `docroot/src/pages` and see instant changes in the browser (refresh the page).
+Edit pages under `docroot/src/pages`. 
+Known issue: instant update is not working, you need to hit refresh in the browser.
 
-## Static site
+## Generating Static Site
 
-If you want to switch to the static site build mode, then open `docksal.env`, change 
-`DOCKSAL_ENVIRONMENT="build"` and restart the project ith `fin restart`.
-
-Now you won't see any changes instantly. The project is being rebuilt on `fin restart`.
-Gatsby will serve you the static copy of the site stored in the `docroot/public`.
+Initiate a static build with `fin build-site`.
