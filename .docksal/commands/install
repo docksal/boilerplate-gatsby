@@ -1,0 +1,21 @@
+#!/bin/bash
+
+## Install nodejs dependencies
+##
+## Removes node_modules and runs `npm install` for a clean dependency installation
+
+cd "$PROJECT_ROOT"
+
+# Make sure project stack is running
+fin project start
+
+echo -e "${yellow}Creating new site${NC}"
+
+# Cleanup
+rm -rf "$PROJECT_ROOT/$DOCROOT" 2>/dev/null
+
+# When CPU is busy and docroot existed then docker can throw an error here, so give it a second to process the deletion
+sleep 1
+
+# Run new gatsby site build
+fin exec npx gatsby new "$DOCROOT" || exit 1
