@@ -19,3 +19,9 @@ Create a static build with `fin build-site`.
 - `fin init` - (re)initialize the project (start fresh, drops `docroot`) 
 - `fin develop` - starts Gatsby server again (if the server or project stack was stopped). Does NOT do a reset
 - `fin build-site` - Generates production GatsbyJS site build in `./public`
+
+## Appendix
+
+### Gatsby 1.x issue with images when working in Docker
+
+When running Gatsby in develop mode, there is an issue with images imported via `import`, because Gatsby appends port to their URLs by default. See https://github.com/gatsbyjs/gatsby/issues/5264#issuecomment-392947839 for the proper workaround.
